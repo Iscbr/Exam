@@ -1,7 +1,5 @@
 package com.project.exam.models;
 
-import org.hibernate.validator.constraints.ISBN;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +17,7 @@ public class Curso {
     @Column(name = "horario", nullable = false, length = 50)
     private String horario;
 
-    @Column(name = "matricula_profesor", nullable = false)
+    @Column(name = "matricula_profesor", nullable = true)
     private Long matriculaProfesor;
 
 
