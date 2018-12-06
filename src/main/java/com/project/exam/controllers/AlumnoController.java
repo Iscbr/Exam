@@ -15,49 +15,50 @@ import java.io.IOException;
 public class AlumnoController {
 
     @Autowired
-    protected AlumnoService alumnoService;
+    private AlumnoService alumnoService;
 
-    private ObjectMapper mapper;
+    private ObjectMapper mapperAlumno;
 
     @RequestMapping(value = "/inscribirOmodificarAlumno", method = RequestMethod.POST)
-    public RestResponse inscribirAlumno(@RequestBody String alumnoJSON) throws IOException {
-        mapper = new ObjectMapper();
-        Alumno alumno = mapper.readValue(alumnoJSON, Alumno.class);
+    public RestResponse inscribirOmodificarAlumno(@RequestBody String alumnoJSON) throws IOException {
+
+        mapperAlumno = new ObjectMapper();
+        Alumno alumno = mapperAlumno.readValue(alumnoJSON, Alumno.class);
 
         if (validateAlumno(alumno)) {
-            alumnoService.saveAlumno(alumno);
+            alumnoService.saveOrUpdateAlumno(alumno);
         } else {
             return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Algunos campos no pueden ser nulos.");
         }
 
-        return new RestResponse(HttpStatus.OK.value(), "¡Alumno inscrito correctamente!");
+        return new RestResponse(HttpStatus.OK.value(), "¡Alumno inscrito o modificado correctamente!");
     }
 
     @RequestMapping(value = "/darbajaAlumno", method = RequestMethod.POST)
     public RestResponse darbajaAlumno (@RequestBody String alumnoJSON) throws IOException {
-        mapper = new ObjectMapper();
+        mapperAlumno = new ObjectMapper();
 
-        Alumno alumno = mapper.readValue(alumnoJSON, Alumno.class);
+        Alumno alumno = mapperAlumno.readValue(alumnoJSON, Alumno.class);
         if (alumno.getMatriculaAlumno() == null) {
             return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Ingrese un ID válido.");
         } else {
             alumnoService.deleteAlumno(alumno.getMatriculaAlumno());
         }
 
-        return new RestResponse(HttpStatus.OK.value(), "¡Alumno dado de baja!");
+        return new RestResponse(HttpStatus.OK.value(), "¡Alumno dado de baja correctamente!");
     }
 
     private boolean validateAlumno(Alumno alumno) {
 
         boolean bn = true;
 
-        if (alumno.getNombre().equals("") || alumno.getNombre().isEmpty()) {
+        if (alumno.getNombre().isEmpty()) {
             bn = false;
         }
-        if (alumno.getApellidoPaterno().equals("") || alumno.getApellidoPaterno().isEmpty()) {
+        if (alumno.getApellidoPaterno().isEmpty()) {
             bn = false;
         }
-        if (alumno.getApellidoMaterno().equals("") || alumno.getApellidoMaterno().isEmpty()) {
+        if (alumno.getApellidoMaterno().isEmpty()) {
             bn = false;
         }
 

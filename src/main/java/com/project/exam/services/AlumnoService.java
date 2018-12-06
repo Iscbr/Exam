@@ -11,7 +11,7 @@ public class AlumnoService {
     @Autowired
     protected AlumnoRepository alumnoRepository;
 
-    public void saveAlumno(Alumno alumno) {
+    public void saveOrUpdateAlumno(Alumno alumno) {
         alumnoRepository.save(alumno);
     }
 
