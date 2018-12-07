@@ -2,6 +2,7 @@ package com.project.exam.services;
 
 import com.project.exam.models.AlumnoToCurso;
 import com.project.exam.models.Curso;
+import com.project.exam.models.GetInfo;
 import com.project.exam.repository.AlumnoRepository;
 import com.project.exam.models.Alumno;
 import com.project.exam.repository.CursoRepository;
@@ -40,5 +41,9 @@ public class AlumnoService {
             }
         }
         return bn;
+    }
+
+    public Alumno getInfoAlumno(GetInfo getInfo) {
+        return alumnoRepository.findByMatriculaAlumno(getInfo.getId());
     }
 }

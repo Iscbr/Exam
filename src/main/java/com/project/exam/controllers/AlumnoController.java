@@ -3,6 +3,7 @@ package com.project.exam.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.exam.models.Alumno;
 import com.project.exam.models.AlumnoToCurso;
+import com.project.exam.models.GetInfo;
 import com.project.exam.services.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,6 +63,13 @@ public class AlumnoController {
             }
         }
         return new RestResponse(HttpStatus.OK.value(), "¡Alumno asignado correctamente!");
+    }
+
+    @RequestMapping(value = "/obtenerinfoAlumno", method = RequestMethod.GET)
+    public Alumno obtenerInfoAlumno(@RequestBody String idAlumnoJSON) throws IOException {
+        mapperAlumno = new ObjectMapper();
+        GetInfo getInfo = mapperAlumno.readValue(idAlumnoJSON, GetInfo.class);
+        return alumnoService.getInfoAlumno(getInfo);
     }
 
     private boolean validateAlumno(Alumno alumno) {

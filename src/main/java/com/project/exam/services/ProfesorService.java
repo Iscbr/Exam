@@ -1,6 +1,7 @@
 package com.project.exam.services;
 
 import com.project.exam.models.Curso;
+import com.project.exam.models.GetInfo;
 import com.project.exam.models.ProfesorToCurso;
 import com.project.exam.repository.CursoRepository;
 import com.project.exam.repository.ProfesorRespository;
@@ -47,5 +48,9 @@ public class ProfesorService {
 
         }
         return bn;
+    }
+
+    public Profesor getInfoProfesor(GetInfo getInfo) {
+        return profesorRespository.findByMatriculaProfesor(getInfo.getId());
     }
 }

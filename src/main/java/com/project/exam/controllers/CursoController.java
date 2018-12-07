@@ -2,6 +2,7 @@ package com.project.exam.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.exam.models.Curso;
+import com.project.exam.models.GetInfo;
 import com.project.exam.services.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,13 @@ public class CursoController {
         }
 
         return new RestResponse(HttpStatus.OK.value(), "¡Curso creado o editado correctamenete!");
+    }
+
+    @RequestMapping(value = "/obtenerinfoCurso", method = RequestMethod.GET)
+    public Curso obtenerInfoCurso(@RequestBody String idCursoJSON) throws IOException {
+        mapperCurso = new ObjectMapper();
+        GetInfo getInfo = mapperCurso.readValue(idCursoJSON, GetInfo.class);
+        return cursoService.getInfoCurso(getInfo);
     }
 
     private boolean validateCurso(Curso curso) {

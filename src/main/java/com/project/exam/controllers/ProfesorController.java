@@ -1,6 +1,7 @@
 package com.project.exam.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.exam.models.GetInfo;
 import com.project.exam.models.Profesor;
 import com.project.exam.models.ProfesorToCurso;
 import com.project.exam.repository.ProfesorRespository;
@@ -66,6 +67,14 @@ public class ProfesorController {
 
         return new RestResponse(HttpStatus.OK.value(), "¡Profesor asignado correctamente!");
     }
+
+    @RequestMapping(value = "/obtenerinfoProfesor", method = RequestMethod.GET)
+    public Profesor obtenerInfoProfesor(@RequestBody String idProfesorJSON) throws IOException {
+        mapperProfesor = new ObjectMapper();
+        GetInfo getInfo = mapperProfesor.readValue(idProfesorJSON, GetInfo.class);
+        return profesorService.getInfoProfesor(getInfo);
+    }
+
     private boolean validateProfesor(Profesor profesor) {
         boolean bn = true;
 
