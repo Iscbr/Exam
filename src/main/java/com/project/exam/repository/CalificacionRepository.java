@@ -1,4 +1,4 @@
-package com.project.exam.dao;
+package com.project.exam.repository;
 
 import com.project.exam.models.Calificacion;
 import org.springframework.data.jpa.repository.JpaRepository;

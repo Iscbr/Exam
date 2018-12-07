@@ -2,6 +2,8 @@ package com.project.exam.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.exam.models.Profesor;
+import com.project.exam.models.ProfesorToCurso;
+import com.project.exam.repository.ProfesorRespository;
 import com.project.exam.services.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +52,20 @@ public class ProfesorController {
         return new RestResponse(HttpStatus.OK.value(), "¡Profesor dado de baja correctamente!");
     }
 
+    @RequestMapping(value = "/asignarcursoaProfesor", method = RequestMethod.POST)
+    public RestResponse asignarcursoaProfesor(@RequestBody String profesorToCursoJSON) throws IOException {
+        mapperProfesor = new ObjectMapper();
+        ProfesorToCurso profesorToCurso = mapperProfesor.readValue(profesorToCursoJSON, ProfesorToCurso.class);
+        if (profesorToCurso.getIdCurso() == null || profesorToCurso.getMatriculaProfesor() == null) {
+            return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Ningún campo puede ser nulo.");
+        } else {
+            if (!profesorService.addCursoToProfesor(profesorToCurso)){
+                return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Alguno de los campos no es válido.");
+            }
+        }
+
+        return new RestResponse(HttpStatus.OK.value(), "¡Profesor asignado correctamente!");
+    }
     private boolean validateProfesor(Profesor profesor) {
         boolean bn = true;
 

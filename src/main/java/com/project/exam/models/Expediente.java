@@ -11,6 +11,15 @@ public class Expediente {
     @Column(name = "id_expediente", nullable = false)
     private Long idExpediente;
 
+    /**
+     * Cadinalidades
+     */
+
+    /*@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MATRICULA_ALUMNO")
+    private Alumno alumno;*/
+    /**----*/
+
     @Column(name = "matricula_alumno", nullable = false)
     private Long matriculaAlumno;
 

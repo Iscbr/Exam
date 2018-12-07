@@ -2,6 +2,8 @@ package com.project.exam.models;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "alumno")
@@ -12,6 +14,21 @@ public class Alumno {
     @Column(name = "matricula_alumno", unique = true, nullable = false)
     private Long matriculaAlumno;
 
+    /**
+     * Cardinalidades
+     */
+
+    /*@OneToMany(mappedBy = "alumnos", cascade = CascadeType.ALL)
+    private List<Curso> cursos = new ArrayList<>();
+
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL)
+    private Expediente expediente;
+
+    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL)
+    private Calificacion calificacion;*/
+
+    /**----*/
+
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
@@ -21,9 +38,18 @@ public class Alumno {
     @Column(name = "a_materno", nullable = false, length = 50)
     private String apellidoMaterno;
 
+
     /**
      * Getters and Setters
      */
+
+    /*public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }*/
 
     public Long getMatriculaAlumno() {
         return matriculaAlumno;

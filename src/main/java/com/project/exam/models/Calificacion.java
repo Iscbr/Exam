@@ -11,6 +11,20 @@ public class Calificacion {
     @Column(name = "id_calificacion", nullable = false)
     private Long idCalificacion;
 
+    /**
+     * Cardinalidades
+     */
+
+    /*@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MATRICULA_ALUMNO")
+    private Alumno alumno;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CURSO")
+    private Curso curso;*/
+
+    /**----*/
+
     @Column(name = "c_obtenida", nullable = false)
     private Long calificacionObtenida;
 

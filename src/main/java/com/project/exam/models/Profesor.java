@@ -1,6 +1,8 @@
 package com.project.exam.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "profesor")
@@ -10,6 +12,22 @@ public class Profesor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "matricula_profesor", unique = true, nullable = false)
     private Long matriculaProfesor;
+
+    /**
+     * Cardinalidades:
+     */
+    //@OneToOne(mappedBy = "profesor", cascade = CascadeType.ALL)
+    //private List<Curso> cursos = new ArrayList<>();
+
+    /*----*/
+
+    /*public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }*/
 
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
