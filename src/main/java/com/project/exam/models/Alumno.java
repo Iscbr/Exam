@@ -18,11 +18,20 @@ public class Alumno {
      * Cardinalidades
      */
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_expediente")
+    private Expediente expediente;
+
+    public Expediente getExpediente() {
+        return expediente;
+    }
+
+    public void setExpediente(Expediente expediente) {
+        this.expediente = expediente;
+    }
+
     /*@OneToMany(mappedBy = "alumnos", cascade = CascadeType.ALL)
     private List<Curso> cursos = new ArrayList<>();
-
-    @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL)
-    private Expediente expediente;
 
     @OneToOne(mappedBy = "alumno", cascade = CascadeType.ALL)
     private Calificacion calificacion;*/

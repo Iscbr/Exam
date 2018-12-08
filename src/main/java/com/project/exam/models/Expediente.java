@@ -7,17 +7,18 @@ import javax.persistence.*;
 public class Expediente {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "matricula_alumno", nullable = false)
-    private Long matriculaAlumno;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_expediente", nullable = false)
+    private Long idExpediente;
 
     /**
      * Cadinalidades
      */
 
-    /*@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MATRICULA_ALUMNO")
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "matricula_alumno")
     private Alumno alumno;*/
+
     /**----*/
 
 
@@ -41,13 +42,12 @@ public class Expediente {
      * Getters and Setters
      */
 
-
-    public Long getMatriculaAlumno() {
-        return matriculaAlumno;
+    public Long getIdExpediente() {
+        return idExpediente;
     }
 
-    public void setMatriculaAlumno(Long matriculaAlumno) {
-        this.matriculaAlumno = matriculaAlumno;
+    public void setIdExpediente(Long idExpediente) {
+        this.idExpediente = idExpediente;
     }
 
     public String getDireccion() {

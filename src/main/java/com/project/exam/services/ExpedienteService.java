@@ -18,16 +18,11 @@ public class ExpedienteService {
 
     public boolean updateExpedienteAlumno(Expediente expediente) {
         boolean bn = true;
-        Alumno alumno = alumnoRepository.findByMatriculaAlumno(expediente.getMatriculaAlumno());
-        if (alumno == null) {
+        Expediente exp = expedienteRepository.findByIdExpediente(expediente.getIdExpediente());
+        if (exp == null) {
             bn = false;
         } else {
-            Expediente expediente1 = expedienteRepository.findByMatriculaAlumno(expediente.getMatriculaAlumno());
-            if (expediente == null) {
-                bn = false;
-            } else {
-                expedienteRepository.save(expediente);
-            }
+            expedienteRepository.save(exp);
         }
         return bn;
     }

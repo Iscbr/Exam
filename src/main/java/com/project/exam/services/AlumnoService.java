@@ -4,6 +4,7 @@ import com.project.exam.models.*;
 import com.project.exam.repository.AlumnoRepository;
 import com.project.exam.repository.CalificacionRepository;
 import com.project.exam.repository.CursoRepository;
+import com.project.exam.repository.ExpedienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class AlumnoService {
 
     @Autowired
     private CalificacionRepository calificacionRepository;
+
+    @Autowired
+    private ExpedienteRepository expedienteRepository;
 
     public void saveOrUpdateAlumno(Alumno alumno) {
         alumnoRepository.save(alumno);
@@ -69,6 +73,23 @@ public class AlumnoService {
                 bn = false;
             }
 
+        }
+
+        return bn;
+    }
+
+    public Alumno buscarAlumno(Alumno alumno) {
+        return alumnoRepository.findByMatriculaAlumno(alumno.getMatriculaAlumno());
+    }
+
+    public boolean modifyExpedienteAlumno(Alumno alumno) {
+        boolean bn = true;
+        Alumno student = alumnoRepository.findByMatriculaAlumno(alumno.getMatriculaAlumno());
+        if (student == null) {
+            bn = false;
+        } else {
+            alumno.getExpediente().setIdExpediente(student.getExpediente().getIdExpediente());
+            expedienteRepository.save(alumno.getExpediente());
         }
 
         return bn;

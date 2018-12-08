@@ -85,6 +85,32 @@ public class AlumnoController {
         return new RestResponse(HttpStatus.OK.value(), "¡Calificación asignada correctamente!");
     }
 
+    @RequestMapping(value = "/actualizarexpedienteAlumno", method = RequestMethod.POST)
+    public RestResponse actualizarExpedienteAlumno(@RequestBody String alumnoJSON) throws IOException {
+        mapperAlumno = new ObjectMapper();
+        Alumno alumno = mapperAlumno.readValue(alumnoJSON, Alumno.class);
+
+        if (validateAlumno(alumno)) {
+            if (!alumnoService.modifyExpedienteAlumno(alumno)) {
+                return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Algunos datos son incorrectos.");
+            }
+        } else {
+            return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Algunos campos no pueden ser nulos.");
+        }
+
+        return new RestResponse(HttpStatus.OK.value(), "Expediente modificado correctamnete.");
+    }
+
+    @RequestMapping(value = "/pruebaOneToOne", method = RequestMethod.GET)
+    public Alumno pruebaOneToOne(@RequestBody String idAlumno) throws IOException {
+        mapperAlumno =  new ObjectMapper();
+        Alumno alumno = mapperAlumno.readValue(idAlumno, Alumno.class);
+
+        return alumnoService.buscarAlumno(alumno);
+    }
+
+
+
     private boolean validateAlumno(Alumno alumno) {
 
         boolean bn = true;
