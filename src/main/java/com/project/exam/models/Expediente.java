@@ -7,9 +7,9 @@ import javax.persistence.*;
 public class Expediente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_expediente", nullable = false)
-    private Long idExpediente;
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "matricula_alumno", nullable = false)
+    private Long matriculaAlumno;
 
     /**
      * Cadinalidades
@@ -20,8 +20,6 @@ public class Expediente {
     private Alumno alumno;*/
     /**----*/
 
-    @Column(name = "matricula_alumno", nullable = false)
-    private Long matriculaAlumno;
 
     @Column(name = "direccion", nullable = true, length = 100)
     private String direccion;
@@ -43,14 +41,6 @@ public class Expediente {
      * Getters and Setters
      */
 
-
-    public Long getIdExpediente() {
-        return idExpediente;
-    }
-
-    public void setIdExpediente(Long idExpediente) {
-        this.idExpediente = idExpediente;
-    }
 
     public Long getMatriculaAlumno() {
         return matriculaAlumno;

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExpedienteRepository extends JpaRepository<Expediente, Long> {
+
+    Expediente findByMatriculaAlumno(Long matriculaAlumno);
 }

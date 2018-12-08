@@ -1,9 +1,7 @@
 package com.project.exam.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.exam.models.Alumno;
-import com.project.exam.models.AlumnoToCurso;
-import com.project.exam.models.GetInfo;
+import com.project.exam.models.*;
 import com.project.exam.services.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,6 +68,21 @@ public class AlumnoController {
         mapperAlumno = new ObjectMapper();
         GetInfo getInfo = mapperAlumno.readValue(idAlumnoJSON, GetInfo.class);
         return alumnoService.getInfoAlumno(getInfo);
+    }
+
+    @RequestMapping(value = "/asignarcalificacionAlumno", method = RequestMethod.POST)
+    public RestResponse asiganrCalificacionAlumno(@RequestBody String calificacionToAlumnoJSON) throws IOException {
+        mapperAlumno = new ObjectMapper();
+        CalificacionToAlumno calificacionToAlumno = mapperAlumno.readValue(calificacionToAlumnoJSON, CalificacionToAlumno.class);
+        if (calificacionToAlumno.getMatriculaAlumno() == null || calificacionToAlumno.getIdCurso() == null || calificacionToAlumno.getCalificacion() == null){
+            return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Ningún valor puede ser nulo.");
+        } else {
+            if (!alumnoService.addCalificacionToAlumno(calificacionToAlumno)) {
+                return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Alguno de los campos son incorrectos.");
+            }
+        }
+
+        return new RestResponse(HttpStatus.OK.value(), "¡Calificación asignada correctamente!");
     }
 
     private boolean validateAlumno(Alumno alumno) {
