@@ -49,14 +49,14 @@ public class AlumnoController {
     }
 
     @RequestMapping(value = "/asignarcursoaAlumno", method = RequestMethod.POST)
-    public RestResponse asignarcursoaAlumno(@RequestBody String alumnoToCursoJSON) throws IOException {
+    public RestResponse asignarcursoaAlumno(@RequestBody String cursoAlumnoJSON) throws IOException {
         mapperAlumno = new ObjectMapper();
-        AlumnoToCurso alumnoToCurso = mapperAlumno.readValue(alumnoToCursoJSON, AlumnoToCurso.class);
+        CursoAlumno cursoAlumno = mapperAlumno.readValue(cursoAlumnoJSON, CursoAlumno.class);
 
-        if (alumnoToCurso.getIdCurso() == null || alumnoToCurso.getMatriculaAlumno() == null){
+        if (cursoAlumno.getIdCurso() == null || cursoAlumno.getMatriculaAlumno() == null){
             return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Ningún campo puede ser nulo.");
         } else {
-            if (!alumnoService.addCursoToAlumno(alumnoToCurso)) {
+            if (!alumnoService.addCursoToAlumno(cursoAlumno)) {
                 return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(), "Alguno de los campos no es válido.");
             }
         }
@@ -67,7 +67,12 @@ public class AlumnoController {
     public Alumno obtenerInfoAlumno(@RequestBody String idAlumnoJSON) throws IOException {
         mapperAlumno = new ObjectMapper();
         GetInfo getInfo = mapperAlumno.readValue(idAlumnoJSON, GetInfo.class);
-        return alumnoService.getInfoAlumno(getInfo);
+        Alumno alumno = alumnoService.getInfoAlumno(getInfo);
+        System.out.println("Hasta aquí todo bien.");
+        System.out.println(alumno.getNombre());
+        //System.out.println(alumno.getExpediente().getDireccion());
+        System.out.println(alumno.getApellidoPaterno());
+        return alumno;
     }
 
     @RequestMapping(value = "/asignarcalificacionAlumno", method = RequestMethod.POST)

@@ -1,27 +1,28 @@
 package com.project.exam.services;
 
 import com.project.exam.models.*;
-import com.project.exam.repository.AlumnoRepository;
-import com.project.exam.repository.CalificacionRepository;
-import com.project.exam.repository.CursoRepository;
-import com.project.exam.repository.ExpedienteRepository;
+import com.project.exam.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AlumnoService {
-
-    @Autowired
     private AlumnoRepository alumnoRepository;
-
-    @Autowired
     private CursoRepository cursoRepository;
-
-    @Autowired
     private CalificacionRepository calificacionRepository;
+    private ExpedienteRepository expedienteRepository;
+    private CursoAlumnoRepository cursoAlumnoRepository;
 
     @Autowired
-    private ExpedienteRepository expedienteRepository;
+    public AlumnoService(AlumnoRepository alumnoRepository, CursoRepository cursoRepository, CalificacionRepository calificacionRepository, ExpedienteRepository expedienteRepository, CursoAlumnoRepository cursoAlumnoRepository) {
+        this.alumnoRepository = alumnoRepository;
+        this.cursoRepository = cursoRepository;
+        this.calificacionRepository = calificacionRepository;
+        this.expedienteRepository = expedienteRepository;
+        this.cursoAlumnoRepository = cursoAlumnoRepository;
+    }
+
+
 
     public void saveOrUpdateAlumno(Alumno alumno) {
         alumnoRepository.save(alumno);
@@ -31,18 +32,19 @@ public class AlumnoService {
         alumnoRepository.deleteById(matriculaAlumno);
     }
 
-    public boolean addCursoToAlumno(AlumnoToCurso alumnoToCurso) {
+    public boolean addCursoToAlumno(CursoAlumno cursoAlumno) {
         boolean bn = true;
-        Alumno alumno = alumnoRepository.findByMatriculaAlumno(alumnoToCurso.getMatriculaAlumno());
+        Alumno alumno = alumnoRepository.findByMatriculaAlumno(cursoAlumno.getMatriculaAlumno());
         if (alumno == null) {
             bn = false;
         } else {
-            Curso curso = cursoRepository.findByIdCurso(alumnoToCurso.getIdCurso());
+            System.out.println("Se encontró el alumno.");
+            Curso curso = cursoRepository.findByIdCurso(cursoAlumno.getIdCurso());
             if (curso == null) {
                 bn = false;
             } else {
-                curso.setMatriculaAlumno(alumno.getMatriculaAlumno());
-                cursoRepository.save(curso);
+                System.out.println("Se encontró el alumno.");
+                cursoAlumnoRepository.save(cursoAlumno);
             }
         }
         return bn;
@@ -52,14 +54,17 @@ public class AlumnoService {
         return alumnoRepository.findByMatriculaAlumno(getInfo.getId());
     }
 
+
+
     public boolean addCalificacionToAlumno(CalificacionToAlumno calificacionToAlumno) {
         boolean bn = true;
         Alumno alumno = alumnoRepository.findByMatriculaAlumno(calificacionToAlumno.getMatriculaAlumno());
         if (alumno == null) {
             bn = false;
         } else {
-            Curso curso = cursoRepository.findByMatriculaAlumnoAndIdCurso(calificacionToAlumno.getMatriculaAlumno(),calificacionToAlumno.getIdCurso());
-            if (curso != null) {
+            CursoAlumno cursoAlumno = cursoAlumnoRepository.findByMatriculaAlumnoAndIdCurso(calificacionToAlumno.getMatriculaAlumno(),calificacionToAlumno.getIdCurso());
+            //Curso curso = cursoRepository.findByMatriculaAlumnoAndIdCurso(calificacionToAlumno.getMatriculaAlumno(),calificacionToAlumno.getIdCurso());
+            if (cursoAlumno != null) {
                 if (calificacionToAlumno.getCalificacion() < 0 || calificacionToAlumno.getCalificacion() > 10) {
                     bn = false;
                 } else {
@@ -88,8 +93,8 @@ public class AlumnoService {
         if (student == null) {
             bn = false;
         } else {
-            alumno.getExpediente().setIdExpediente(student.getExpediente().getIdExpediente());
-            expedienteRepository.save(alumno.getExpediente());
+            /*alumno.getExpediente().setIdExpediente(student.getExpediente().getIdExpediente());
+            expedienteRepository.save(alumno.getExpediente());*/
         }
 
         return bn;

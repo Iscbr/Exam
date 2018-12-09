@@ -10,17 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProfesorService {
 
-    @Autowired
-    protected ProfesorRespository profesorRespository;
+    private ProfesorRespository profesorRespository;
+    private CursoRepository cursoRepository;
 
     @Autowired
-    protected CursoRepository cursoRepository;
+    public ProfesorService(ProfesorRespository profesorRespository, CursoRepository cursoRepository) {
+        this.profesorRespository = profesorRespository;
+        this.cursoRepository = cursoRepository;
+    }
 
 
 

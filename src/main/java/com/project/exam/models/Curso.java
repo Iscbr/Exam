@@ -16,13 +16,21 @@ public class Curso {
     /**
      * Cardinalidades
      */
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "curso_alumno", joinColumns = @JoinColumn(name = "id_curso"),
+    inverseJoinColumns = @JoinColumn(name = "matricula_alumno"))
+    private List<Alumno> alumnos = new ArrayList<>();
+
+    /*@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "calificaciones_observaciones",
+            joinColumns = @JoinColumn(name = "calificaciones_id"),
+            inverseJoinColumns = @JoinColumn(name = "observaciones_id"))
+    private List<Observaciones> observacionesList;*/
+
     /*@OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "MATRICULA_PROFESOR")
     private Profesor profesor;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MATRICULA_ALUMNO")
-    List<Alumno> alumnos = new ArrayList<>();
 
     @OneToOne(mappedBy = "curso", cascade = CascadeType.ALL)
     private Calificacion calificacion;*/
@@ -38,46 +46,17 @@ public class Curso {
     @Column(name = "matricula_profesor", nullable = true)
     private Long matriculaProfesor;
 
-    @Column(name = "matricula_alumno", nullable = true)
-    private Long matriculaAlumno;
-
-
 
     /**
      * Getters and Setters
      */
 
-    /*public List<Alumno> getAlumnos() {
+    public List<Alumno> getAlumnos() {
         return alumnos;
     }
 
     public void setAlumnos(List<Alumno> alumnos) {
         this.alumnos = alumnos;
-    }
-
-    public Calificacion getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Calificacion calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }*/
-
-
-    public Long getMatriculaAlumno() {
-        return matriculaAlumno;
-    }
-
-    public void setMatriculaAlumno(Long matriculaAlumno) {
-        this.matriculaAlumno = matriculaAlumno;
     }
 
     public Long getIdCurso() {

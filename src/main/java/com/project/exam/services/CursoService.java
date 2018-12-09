@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CursoService {
 
+    private CursoRepository cursoRepository;
+
     @Autowired
-    protected CursoRepository cursoRepository;
+    public CursoService(CursoRepository cursoRepository) {
+        this.cursoRepository = cursoRepository;
+    }
 
     public void saveOrUpdateCurso(Curso curso) {
         cursoRepository.save(curso);

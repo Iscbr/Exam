@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 
-    @Query(value = "select c from Curso c where c.matriculaAlumno = :mAlumno and c.idCurso = :idCurso")
-    Curso findByMatriculaAlumnoAndIdCurso(@Param("mAlumno") Long matriculaAlumno, @Param("idCurso") Long idCurso);
+    /*@Query(value = "select c from Curso c where c.matriculaAlumno = :mAlumno and c.idCurso = :idCurso")
+    Curso findByMatriculaAlumnoAndIdCurso(@Param("mAlumno") Long matriculaAlumno, @Param("idCurso") Long idCurso);*/
 
     Curso findByIdCurso(Long idCurso);
 }
